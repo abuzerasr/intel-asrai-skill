@@ -10,10 +10,16 @@ Installs instructions into Claude so it automatically knows when and how to use 
 npx skills add intel-asrai
 ```
 
-Or via Clawhub:
+Via Clawhub:
 
 ```bash
-npx skills add clawhub:intel-asrai
+clawdhub install intel-asrai
+```
+
+Manual:
+
+```bash
+git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/skills/intel-asrai
 ```
 
 ## What this skill does
