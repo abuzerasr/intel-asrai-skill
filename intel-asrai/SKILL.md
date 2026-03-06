@@ -8,21 +8,7 @@ license: MIT
 
 ## Prerequisites
 
-This skill requires **intel-asrai-mcp** connected to your MCP client.
-
-### Option A — Key in URL (recommended for remote / n8n)
-
-```json
-{
-  "mcpServers": {
-    "intel-search": {
-      "url": "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
-    }
-  }
-}
-```
-
-### Option B — Local npx + env var
+This skill requires **intel-asrai-mcp** (Node.js, zero install). Add to Claude Desktop config:
 
 ```json
 {
@@ -43,7 +29,9 @@ INTEL_PRIVATE_KEY=0x<your_private_key>
 
 Config file location: macOS `~/Library/Application Support/Claude/claude_desktop_config.json`, Windows `%APPDATA%\Claude\claude_desktop_config.json`, Linux `~/.config/Claude/claude_desktop_config.json`.
 
-**SSE (legacy):** `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
+For **n8n / remote connections**, use the hosted MCP server — no install needed:
+- HTTP Streamable: `https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>`
+- SSE (legacy): `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
 
 Each search costs **$0.005 USDC** from your wallet on Base mainnet.
 
