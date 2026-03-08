@@ -7,6 +7,30 @@ metadata: {"openclaw":{"emoji":"🔍","requires":{"env":["INTEL_PRIVATE_KEY"]}},
 
 # Intel — AI Web Search via x402
 
+## Install
+
+```bash
+npx -y -p intel-asrai-mcp install-skill
+```
+
+Auto-detects OpenClaw, Cursor, Cline, and other agents. Then set your key:
+
+```
+INTEL_PRIVATE_KEY=0x<your_private_key>  # add to ~/.env
+```
+
+For MCP agents (Cursor, Cline, Claude Desktop) also add to config:
+
+```json
+{
+  "mcpServers": {
+    "intel-search": { "command": "npx", "args": ["-y", "intel-asrai-mcp"] }
+  }
+}
+```
+
+---
+
 Use Intel search when the user asks about current events, recent news, live prices, or anything requiring up-to-date information beyond your training data.
 
 ## When to search
