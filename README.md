@@ -6,20 +6,24 @@ Installs instructions into Claude so it automatically knows when and how to use 
 
 ## Install
 
-```bash
-npx skills add intel-asrai
-```
+### OpenClaw (recommended)
 
-Via Clawhub:
+> **Note:** This skill is not yet in the ClawHub registry. Use the full GitHub URL:
 
 ```bash
-clawdhub install intel-asrai
+npx skills add https://github.com/abuzerasr/intel-asrai-skill
 ```
 
-Manual:
+Or clone manually:
 
 ```bash
 git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/skills/intel-asrai
+```
+
+### Claude Desktop / other MCP clients
+
+```bash
+npx skills add https://github.com/abuzerasr/intel-asrai-skill
 ```
 
 ## What this skill does
@@ -32,35 +36,60 @@ git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/skills/
 
 ## Prerequisites
 
-Requires **intel-asrai-mcp** connected to your MCP client. Add to your config:
+Requires **intel-asrai-mcp** connected to your MCP client.
+
+### OpenClaw — Remote URL (easiest, recommended)
+
+No local install needed. Run:
+
+```bash
+openclaw config set mcpServers.intel-search.url "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
+```
+
+### OpenClaw — Local npx
+
+```bash
+openclaw config set mcpServers.intel-search.command "npx"
+openclaw config set mcpServers.intel-search.args '["-y", "intel-asrai-mcp"]'
+openclaw config set mcpServers.intel-search.env.INTEL_PRIVATE_KEY "0x<your_private_key>"
+```
+
+### Claude Desktop — JSON config
+
+Add to your Claude Desktop config file:
 
 ```json
 {
   "mcpServers": {
     "intel-search": {
-      "url": "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
+      "command": "npx",
+      "args": ["-y", "intel-asrai-mcp"],
+      "env": { "INTEL_PRIVATE_KEY": "0x<your_private_key>" }
     }
   }
 }
 ```
 
-Or set your key once in `~/.env`:
+Config file location:
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+- Linux: `~/.config/Claude/claude_desktop_config.json`
+
+### n8n / remote connections
+
+Use the hosted MCP server — no install needed:
+- HTTP Streamable: `https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>`
+- SSE (legacy): `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
+
+### Key via environment variable
+
+Store your key in `~/.env` and omit it from the URL/config:
 
 ```
 INTEL_PRIVATE_KEY=0x<your_private_key>
 ```
 
-Then use the URL without a key:
-
-```json
-{
-  "mcpServers": {
-    "intel-search": {
-      "url": "https://intel-mcp.asrai.me/mcp"
-    }
-  }
-}
-```
+Then use: `https://intel-mcp.asrai.me/mcp`
 
 Your wallet must have USDC on Base mainnet. Each search costs **$0.005 USDC**.
 

@@ -8,7 +8,23 @@ license: MIT
 
 ## Prerequisites
 
-This skill requires **intel-asrai-mcp** (Node.js, zero install). Add to Claude Desktop config:
+This skill requires **intel-asrai-mcp** connected to your MCP client.
+
+### OpenClaw — Remote URL (recommended)
+
+```bash
+openclaw config set mcpServers.intel-search.url "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
+```
+
+### OpenClaw — Local npx
+
+```bash
+openclaw config set mcpServers.intel-search.command "npx"
+openclaw config set mcpServers.intel-search.args '["-y", "intel-asrai-mcp"]'
+openclaw config set mcpServers.intel-search.env.INTEL_PRIVATE_KEY "0x<your_private_key>"
+```
+
+### Claude Desktop — JSON config
 
 ```json
 {
@@ -22,16 +38,19 @@ This skill requires **intel-asrai-mcp** (Node.js, zero install). Add to Claude D
 }
 ```
 
-Or store the key in `~/.env` and omit the `env` block:
+Config file location: macOS `~/Library/Application Support/Claude/claude_desktop_config.json`, Windows `%APPDATA%\Claude\claude_desktop_config.json`, Linux `~/.config/Claude/claude_desktop_config.json`.
+
+### n8n / remote connections
+
+- HTTP Streamable: `https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>`
+- SSE (legacy): `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
+
+### Key via environment variable
+
+Store in `~/.env` and omit from URL/config:
 ```
 INTEL_PRIVATE_KEY=0x<your_private_key>
 ```
-
-Config file location: macOS `~/Library/Application Support/Claude/claude_desktop_config.json`, Windows `%APPDATA%\Claude\claude_desktop_config.json`, Linux `~/.config/Claude/claude_desktop_config.json`.
-
-For **n8n / remote connections**, use the hosted MCP server — no install needed:
-- HTTP Streamable: `https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>`
-- SSE (legacy): `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
 
 Each search costs **$0.005 USDC** from your wallet on Base mainnet.
 
