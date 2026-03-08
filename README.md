@@ -22,6 +22,11 @@ Or clone manually:
 git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/workspace/skills/intel-asrai
 ```
 
+The repo root IS the skill — `SKILL.md` is at the top level.
+
+```bash
+```
+
 After installing, ask your agent to "refresh skills" or restart.
 
 ---
