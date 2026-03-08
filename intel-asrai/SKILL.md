@@ -10,6 +10,17 @@ license: MIT
 
 This skill requires **intel-asrai-mcp** connected to your MCP client.
 
+### Install this skill
+
+```bash
+npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
+```
+
+If the scope prompt blocks install, use:
+```bash
+npx skills add https://github.com/abuzerasr/intel-asrai-skill -g -y
+```
+
 ### OpenClaw — Remote URL (recommended)
 
 ```bash

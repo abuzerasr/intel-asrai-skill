@@ -11,7 +11,19 @@ Installs instructions into Claude so it automatically knows when and how to use 
 > **Note:** This skill is not yet in the ClawHub registry. Use the full GitHub URL:
 
 ```bash
-npx skills add https://github.com/abuzerasr/intel-asrai-skill
+npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
+```
+
+The `-y` flag skips the interactive scope prompt. If that doesn't work, try:
+
+```bash
+npx skills add https://github.com/abuzerasr/intel-asrai-skill -g -y
+```
+
+Or install all skills globally:
+
+```bash
+npx skills add https://github.com/abuzerasr/intel-asrai-skill --all
 ```
 
 Or clone manually:
@@ -23,7 +35,7 @@ git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/skills/
 ### Claude Desktop / other MCP clients
 
 ```bash
-npx skills add https://github.com/abuzerasr/intel-asrai-skill
+npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
 ```
 
 ## What this skill does
