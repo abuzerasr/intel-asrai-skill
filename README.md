@@ -6,28 +6,25 @@ Works with **OpenClaw**, **Claude Desktop**, **Cursor**, **Cline**, and any MCP-
 
 ## Install
 
-```bash
-npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
-```
-
-If the scope prompt blocks install:
+### One command — works everywhere
 
 ```bash
-npx skills add https://github.com/abuzerasr/intel-asrai-skill -g -y
+npx -y intel-asrai-mcp install-skill
 ```
 
-Or clone manually:
+Auto-detects OpenClaw, Cursor, Cline, and other agents. Copies SKILL.md to the right place. Then restart your agent or run "refresh skills".
+
+### Manual — OpenClaw (if auto-detect fails)
 
 ```bash
 git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/workspace/skills/intel-asrai
 ```
 
-The repo root IS the skill — `SKILL.md` is at the top level.
+### Manual — Cursor / Cline / other agents
 
 ```bash
+npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
 ```
-
-After installing, ask your agent to "refresh skills" or restart.
 
 ---
 
