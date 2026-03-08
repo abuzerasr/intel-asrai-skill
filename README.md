@@ -55,15 +55,15 @@ Requires **intel-asrai-mcp** connected to your MCP client.
 No local install needed. Run:
 
 ```bash
-openclaw config set mcpServers.intel-search.url "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
+openclaw config set mcp.servers.intel-search.url "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
 ```
 
 ### OpenClaw — Local npx
 
 ```bash
-openclaw config set mcpServers.intel-search.command "npx"
-openclaw config set mcpServers.intel-search.args '["-y", "intel-asrai-mcp"]'
-openclaw config set mcpServers.intel-search.env.INTEL_PRIVATE_KEY "0x<your_private_key>"
+openclaw config set mcp.servers.intel-search.command "npx"
+openclaw config set mcp.servers.intel-search.args '["-y", "intel-asrai-mcp"]'
+openclaw config set mcp.servers.intel-search.env.INTEL_PRIVATE_KEY "0x<your_private_key>"
 ```
 
 ### Claude Desktop — JSON config
