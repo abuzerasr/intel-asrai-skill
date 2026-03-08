@@ -52,18 +52,40 @@ Requires **intel-asrai-mcp** connected to your MCP client.
 
 ### OpenClaw — Remote URL (easiest, recommended)
 
-No local install needed. Run:
+Edit `~/.openclaw/openclaw.json` and add:
 
-```bash
-openclaw config set mcp.servers.intel-search.url "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
+```json
+{
+  "mcp": {
+    "servers": {
+      "intel-search": {
+        "url": "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>",
+        "transport": "sse"
+      }
+    }
+  }
+}
 ```
+
+OpenClaw watches the file and applies changes automatically — no restart needed.
 
 ### OpenClaw — Local npx
 
-```bash
-openclaw config set mcp.servers.intel-search.command "npx"
-openclaw config set mcp.servers.intel-search.args '["-y", "intel-asrai-mcp"]'
-openclaw config set mcp.servers.intel-search.env.INTEL_PRIVATE_KEY "0x<your_private_key>"
+Edit `~/.openclaw/openclaw.json` and add:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "intel-search": {
+        "command": "npx",
+        "args": ["-y", "intel-asrai-mcp"],
+        "transport": "stdio",
+        "env": { "INTEL_PRIVATE_KEY": "0x<your_private_key>" }
+      }
+    }
+  }
+}
 ```
 
 ### Claude Desktop — JSON config

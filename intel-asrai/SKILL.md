@@ -23,16 +23,40 @@ npx skills add https://github.com/abuzerasr/intel-asrai-skill -g -y
 
 ### OpenClaw — Remote URL (recommended)
 
-```bash
-openclaw config set mcp.servers.intel-search.url "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>"
+Edit `~/.openclaw/openclaw.json` and add:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "intel-search": {
+        "url": "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>",
+        "transport": "sse"
+      }
+    }
+  }
+}
 ```
+
+OpenClaw watches the file and applies changes automatically — no restart needed.
 
 ### OpenClaw — Local npx
 
-```bash
-openclaw config set mcp.servers.intel-search.command "npx"
-openclaw config set mcp.servers.intel-search.args '["-y", "intel-asrai-mcp"]'
-openclaw config set mcp.servers.intel-search.env.INTEL_PRIVATE_KEY "0x<your_private_key>"
+Edit `~/.openclaw/openclaw.json` and add:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "intel-search": {
+        "command": "npx",
+        "args": ["-y", "intel-asrai-mcp"],
+        "transport": "stdio",
+        "env": { "INTEL_PRIVATE_KEY": "0x<your_private_key>" }
+      }
+    }
+  }
+}
 ```
 
 ### Claude Desktop — JSON config
