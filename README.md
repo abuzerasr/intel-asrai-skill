@@ -2,13 +2,9 @@
 
 Skill for [Intel](https://intel.asrai.me) — AI-powered web search via x402 micropayments on Base.
 
-Works with **OpenClaw**, **Claude Desktop**, and any MCP-compatible agent. Teaches the agent when and how to use Intel web search, how to present results, and manages cost awareness.
+Works with **OpenClaw**, **Claude Desktop**, **Cursor**, **Cline**, and any MCP-compatible or bash-capable agent.
 
 ## Install
-
-### OpenClaw
-
-> **Note:** This skill is not yet in the ClawHub registry. Use the full GitHub URL:
 
 ```bash
 npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
@@ -20,75 +16,37 @@ If the scope prompt blocks install:
 npx skills add https://github.com/abuzerasr/intel-asrai-skill -g -y
 ```
 
-Or clone manually into your OpenClaw workspace:
+Or clone manually:
 
 ```bash
 git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/workspace/skills/intel-asrai
 ```
 
-### Claude Desktop / other agents
-
-```bash
-npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
-```
-
-After installing, ask your agent to "refresh skills" or restart the gateway.
-
-## What this skill does
-
-- Teaches the agent when to use `intel_search` vs its own knowledge
-- Defines how to present results (synthesized answers + sources)
-- Sets cost awareness ($0.005 USDC per search)
-- Covers all search modes: `speed`, `balanced`, `quality`
-- Covers all source types: `web`, `academic`, `discussions`
-
-## Prerequisites
-
-Requires **intel-asrai-mcp** connected to your agent. Set `INTEL_PRIVATE_KEY` in your environment.
-
-Your wallet must have USDC on Base mainnet. Each search costs **$0.005 USDC**.
+After installing, ask your agent to "refresh skills" or restart.
 
 ---
 
-## MCP Setup
+## Setup by platform
 
-### OpenClaw — Remote URL (easiest, recommended)
+### OpenClaw (bash mode — no MCP needed)
 
-Edit `~/.openclaw/openclaw.json` and add:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "intel-search": {
-        "url": "https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>",
-        "transport": "sse"
-      }
-    }
-  }
-}
+1. Set your key in `~/.env`:
+```
+INTEL_PRIVATE_KEY=0x<your_private_key>
 ```
 
-OpenClaw watches the file and applies changes automatically — no restart needed.
+2. That's it. The skill uses `npx` automatically — no extra install needed.
 
-### OpenClaw — Local npx
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "intel-search": {
-        "command": "npx",
-        "args": ["-y", "intel-asrai-mcp"],
-        "transport": "stdio",
-        "env": { "INTEL_PRIVATE_KEY": "0x<your_private_key>" }
-      }
-    }
-  }
-}
+The agent runs:
+```bash
+npx -y -p intel-asrai-mcp intel-search "query"
 ```
 
-### Claude Desktop
+Node.js is required (already installed with OpenClaw).
+
+---
+
+### Claude Desktop (MCP mode)
 
 Add to your Claude Desktop config file:
 
@@ -109,28 +67,47 @@ Config file location:
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 - Linux: `~/.config/Claude/claude_desktop_config.json`
 
+---
+
+### Cursor / Cline / other MCP clients
+
+Add to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "intel-search": {
+      "command": "npx",
+      "args": ["-y", "intel-asrai-mcp"],
+      "env": { "INTEL_PRIVATE_KEY": "0x<your_private_key>" }
+    }
+  }
+}
+```
+
+---
+
 ### n8n / remote connections
 
 - HTTP Streamable: `https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>`
 - SSE (legacy): `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
 
-### Key via environment variable
-
-Store in `~/.env` and omit from URL/config:
-
-```
-INTEL_PRIVATE_KEY=0x<your_private_key>
-```
-
-Then use: `https://intel-mcp.asrai.me/mcp`
-
 ---
+
+## What this skill does
+
+- Knows when to use Intel search vs its own knowledge
+- Works via MCP tool (`intel_search`) when available
+- Falls back to bash CLI (`intel-search`) on OpenClaw and other agents
+- Handles all search modes: `speed`, `balanced`, `quality`
+- Handles all source types: `web`, `academic`, `discussions`
+- Cost-aware: $0.005 USDC per search
 
 ## MCP tool
 
 | Tool | Description | Cost |
 |---|---|---|
-| `intel_search` | AI web search with synthesized answer and cited sources | $0.005 |
+| `intel_search` | AI web search — synthesized answer with cited sources | $0.005 |
 
 **Parameters:**
 - `query` — the search question or topic

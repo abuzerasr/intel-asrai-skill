@@ -7,50 +7,53 @@ metadata: {"openclaw":{"emoji":"🔍","requires":{"env":["INTEL_PRIVATE_KEY"]}},
 
 # Intel — AI Web Search via x402
 
-Use `intel_search` when the user asks about current events, recent news, live prices, or anything that requires up-to-date information beyond your training data.
+Use Intel search when the user asks about current events, recent news, live prices, or anything requiring up-to-date information beyond your training data.
 
 ## When to search
 
 - Current events, breaking news, recent developments → search
-- Live prices, scores, weather → search
-- Research questions needing latest sources → search
+- Live prices, scores, real-time data → search
+- Research needing latest sources → search
 - General knowledge you already know well → do NOT search (costs $0.005 USDC each time)
 
-## Tool
+## How to search
+
+### If intel_search tool is available (MCP connected)
 
 ```
-intel_search(
-  query:   string,
-  mode:    "speed" | "balanced" | "quality",
-  sources: ("web" | "academic" | "discussions")[]
-)
+intel_search(query, mode, sources)
 ```
 
-**mode** — choose based on query type:
-- `speed` — current events, simple facts, news
-- `balanced` — default for most queries
-- `quality` — deep research, complex topics
+### If no MCP tool — use bash (OpenClaw and other agents)
 
-**sources** — choose based on what the user needs:
-- `["web"]` — general results (default)
-- `["academic"]` — research papers, studies
-- `["discussions"]` — Reddit, forums, community sentiment
+```bash
+npx -y -p intel-asrai-mcp intel-search "<query>" <mode> <sources>
+```
 
-## Usage patterns
+Examples:
+```bash
+npx -y -p intel-asrai-mcp intel-search "bitcoin price today" speed web
+npx -y -p intel-asrai-mcp intel-search "latest AI research" quality academic
+npx -y -p intel-asrai-mcp intel-search "what people think about X" balanced discussions
+```
 
-- "What happened with X today?" → `intel_search(query, mode="speed")`
-- "Explain the latest research on X" → `intel_search(query, mode="quality", sources=["academic"])`
-- "What are people saying about X?" → `intel_search(query, sources=["discussions"])`
+Requires `INTEL_PRIVATE_KEY` set in `~/.env` or environment. Payment ($0.005 USDC) is signed automatically.
+
+## Parameters
+
+- **query** — the search question
+- **mode** — `speed` (fast, news), `balanced` (default), `quality` (deep research)
+- **sources** — `web` (default), `academic` (papers), `discussions` (Reddit/forums)
 
 ## Output rules
 
-- Lead with the synthesized answer directly — no preamble
+- Lead with the synthesized answer — no preamble
 - List sources as numbered links after the answer
-- For factual questions: direct answer first, then supporting detail
+- For factual questions: direct answer first, then detail
 - For news: key developments first, then sources
 - Never mention tool names, API calls, or payment details in responses
-- Keep it concise — synthesize, don't dump raw results
+- Keep it concise — synthesize, don't dump
 
 ## Cost
 
-Each search costs **$0.005 USDC** from the user's wallet on Base mainnet. Inform the user if they ask about cost. Payments are signed by the user's own wallet — never a shared key.
+$0.005 USDC per search, signed from the user's own wallet on Base mainnet. Tell the user if they ask.
