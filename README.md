@@ -1,12 +1,12 @@
 # intel-asrai-skill
 
-Claude skill for [Intel](https://intel.asrai.me) — AI-powered web search via x402 micropayments on Base.
+Skill for [Intel](https://intel.asrai.me) — AI-powered web search via x402 micropayments on Base.
 
-Installs instructions into Claude so it automatically knows when and how to use Intel web search.
+Works with **OpenClaw**, **Claude Desktop**, and any MCP-compatible agent. Teaches the agent when and how to use Intel web search, how to present results, and manages cost awareness.
 
 ## Install
 
-### OpenClaw (recommended)
+### OpenClaw
 
 > **Note:** This skill is not yet in the ClawHub registry. Use the full GitHub URL:
 
@@ -14,33 +14,29 @@ Installs instructions into Claude so it automatically knows when and how to use 
 npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
 ```
 
-The `-y` flag skips the interactive scope prompt. If that doesn't work, try:
+If the scope prompt blocks install:
 
 ```bash
 npx skills add https://github.com/abuzerasr/intel-asrai-skill -g -y
 ```
 
-Or install all skills globally:
+Or clone manually into your OpenClaw workspace:
 
 ```bash
-npx skills add https://github.com/abuzerasr/intel-asrai-skill --all
+git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/workspace/skills/intel-asrai
 ```
 
-Or clone manually:
-
-```bash
-git clone https://github.com/abuzerasr/intel-asrai-skill.git ~/.openclaw/skills/intel-asrai
-```
-
-### Claude Desktop / other MCP clients
+### Claude Desktop / other agents
 
 ```bash
 npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
 ```
 
+After installing, ask your agent to "refresh skills" or restart the gateway.
+
 ## What this skill does
 
-- Teaches Claude when to use `intel_search` vs its own knowledge
+- Teaches the agent when to use `intel_search` vs its own knowledge
 - Defines how to present results (synthesized answers + sources)
 - Sets cost awareness ($0.005 USDC per search)
 - Covers all search modes: `speed`, `balanced`, `quality`
@@ -48,7 +44,13 @@ npx skills add https://github.com/abuzerasr/intel-asrai-skill -y
 
 ## Prerequisites
 
-Requires **intel-asrai-mcp** connected to your MCP client.
+Requires **intel-asrai-mcp** connected to your agent. Set `INTEL_PRIVATE_KEY` in your environment.
+
+Your wallet must have USDC on Base mainnet. Each search costs **$0.005 USDC**.
+
+---
+
+## MCP Setup
 
 ### OpenClaw — Remote URL (easiest, recommended)
 
@@ -71,8 +73,6 @@ OpenClaw watches the file and applies changes automatically — no restart neede
 
 ### OpenClaw — Local npx
 
-Edit `~/.openclaw/openclaw.json` and add:
-
 ```json
 {
   "mcp": {
@@ -88,7 +88,7 @@ Edit `~/.openclaw/openclaw.json` and add:
 }
 ```
 
-### Claude Desktop — JSON config
+### Claude Desktop
 
 Add to your Claude Desktop config file:
 
@@ -111,13 +111,12 @@ Config file location:
 
 ### n8n / remote connections
 
-Use the hosted MCP server — no install needed:
 - HTTP Streamable: `https://intel-mcp.asrai.me/mcp?key=0x<your_private_key>`
 - SSE (legacy): `https://intel-mcp.asrai.me/sse?key=0x<your_private_key>`
 
 ### Key via environment variable
 
-Store your key in `~/.env` and omit it from the URL/config:
+Store in `~/.env` and omit from URL/config:
 
 ```
 INTEL_PRIVATE_KEY=0x<your_private_key>
@@ -125,7 +124,7 @@ INTEL_PRIVATE_KEY=0x<your_private_key>
 
 Then use: `https://intel-mcp.asrai.me/mcp`
 
-Your wallet must have USDC on Base mainnet. Each search costs **$0.005 USDC**.
+---
 
 ## MCP tool
 
